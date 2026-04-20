@@ -1909,13 +1909,11 @@
         </div>
       </div>
 
-      <form class="contact-form reveal" action="https://formsubmit.co/wearelatentt@gmail.com" method="POST" id="contactForm">
-        <!-- FormSubmit config (hidden inputs) -->
+      <form class="contact-form reveal" action="https://formspree.io/f/xaqadqdg" method="POST" id="contactForm">
+        <!-- Formspree config -->
         <input type="hidden" name="_subject" value="Nuevo lead desde wearelatent.com">
-        <input type="hidden" name="_captcha" value="false">
-        <input type="hidden" name="_template" value="table">
         <input type="hidden" name="_next" value="https://wearelatent.com/?sent=true">
-        <input type="text" name="_honey" style="display:none">
+        <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
 
         <div class="form-row">
           <div class="form-group">
@@ -2425,7 +2423,7 @@ const io = new IntersectionObserver((entries) => {
 document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
 /* ==========================================================
-   Form submission status (FormSubmit handles the POST)
+   Form submission status (Formspree handles the POST)
 ========================================================== */
 const params = new URLSearchParams(window.location.search);
 if (params.get('sent') === 'true') {
