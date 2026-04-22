@@ -594,6 +594,8 @@
     border: 1px solid var(--rule);
   }
 
+  .service-wide { grid-column: span 2; }
+
   .service {
     background: var(--black-2);
     padding: 2rem 1.8rem;
@@ -676,6 +678,7 @@
   @media (max-width: 760px) {
     .services-grid { grid-template-columns: 1fr; }
     .service { padding: 1.6rem 1.4rem; min-height: auto; }
+    .service-wide { grid-column: span 1; }
   }
 
   /* ===================================================================
@@ -730,8 +733,8 @@
   .work-card:hover .work-arrow { transform: translate(4px, -4px); }
 
   /* Grid layout: 2 filas balanceadas — asimétrica + simétrica */
-  .work-card:nth-child(1) { grid-column: span 7; aspect-ratio: 16 / 10; }
-  .work-card:nth-child(2) { grid-column: span 5; aspect-ratio: 4 / 5; }
+  .work-card:nth-child(1) { grid-column: span 7; aspect-ratio: 16 / 9; }
+  .work-card:nth-child(2) { grid-column: span 5; aspect-ratio: 9 / 16; }
   .work-card:nth-child(3) { grid-column: span 6; aspect-ratio: 4 / 3; }
   .work-card:nth-child(4) { grid-column: span 6; aspect-ratio: 4 / 3; }
 
@@ -871,6 +874,135 @@
   }
 
   .works-cta p strong { color: var(--dot); font-weight: 500; }
+
+  /* ===== CARRUSEL (Virtual Photo card) ===== */
+  .work-card-carousel {
+    position: relative;
+  }
+
+  .work-card-carousel:hover { transform: none; } /* Desactivar el lift en hover para no pelear con el carrusel */
+
+  .carousel-track {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform;
+    touch-action: pan-y pinch-zoom; /* Permite swipe horizontal pero deja scroll vertical */
+  }
+
+  .carousel-slide {
+    flex: 0 0 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    user-select: none;
+  }
+
+  /* Placeholders distintos por slide */
+  .carousel-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .carousel-placeholder[data-slide="1"] { background: radial-gradient(circle at 40% 30%, rgba(245, 166, 35, 0.22), transparent 60%), linear-gradient(135deg, #1c1814 0%, #0a0806 100%); }
+  .carousel-placeholder[data-slide="2"] { background: radial-gradient(ellipse at 70% 40%, rgba(245, 166, 35, 0.2), transparent 55%), linear-gradient(180deg, #161310 0%, #060504 100%); }
+  .carousel-placeholder[data-slide="3"] { background: radial-gradient(circle at 20% 80%, rgba(245, 166, 35, 0.18), transparent 55%), linear-gradient(45deg, #1a1612 0%, #0a0806 100%); }
+  .carousel-placeholder[data-slide="4"] { background: radial-gradient(ellipse at 50% 50%, rgba(245, 166, 35, 0.22), transparent 60%), linear-gradient(160deg, #14110e 0%, #060504 100%); }
+  .carousel-placeholder[data-slide="5"] { background: radial-gradient(circle at 80% 20%, rgba(245, 166, 35, 0.18), transparent 55%), linear-gradient(210deg, #181510 0%, #050403 100%); }
+  .carousel-placeholder[data-slide="6"] { background: radial-gradient(ellipse at 30% 70%, rgba(245, 166, 35, 0.2), transparent 55%), linear-gradient(90deg, #1c1814 0%, #0d0a07 100%); }
+  .carousel-placeholder[data-slide="7"] { background: radial-gradient(circle at 60% 40%, rgba(245, 166, 35, 0.22), transparent 58%), linear-gradient(135deg, #181510 0%, #0a0806 100%); }
+  .carousel-placeholder[data-slide="8"] { background: radial-gradient(ellipse at 25% 25%, rgba(245, 166, 35, 0.2), transparent 55%), linear-gradient(200deg, #1c1814 0%, #060504 100%); }
+  .carousel-placeholder[data-slide="9"] { background: radial-gradient(circle at 75% 75%, rgba(245, 166, 35, 0.22), transparent 60%), linear-gradient(45deg, #161310 0%, #0a0806 100%); }
+
+  .carousel-placeholder::after {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      repeating-linear-gradient(90deg, transparent 0 19px, rgba(255,255,255,0.012) 19px 20px),
+      repeating-linear-gradient(0deg, transparent 0 19px, rgba(255,255,255,0.012) 19px 20px);
+    pointer-events: none;
+  }
+
+  .carousel-num {
+    position: relative;
+    z-index: 2;
+    font-family: var(--font-mono);
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.3);
+    letter-spacing: 0.2em;
+    pointer-events: none;
+  }
+
+  /* Flechas */
+  .carousel-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    background: rgba(10, 10, 10, 0.6);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: var(--white);
+    font-size: 1.8rem;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s var(--ease);
+    opacity: 0;
+  }
+
+  .work-card-carousel:hover .carousel-arrow { opacity: 1; }
+  .carousel-arrow:hover { background: var(--dot); color: var(--black); border-color: var(--dot); transform: translateY(-50%) scale(1.05); }
+  .carousel-arrow:disabled { opacity: 0.3; cursor: not-allowed; pointer-events: none; }
+
+  .carousel-prev { left: 1rem; }
+  .carousel-next { right: 1rem; }
+
+  .carousel-prev span, .carousel-next span { display: block; line-height: 0; }
+
+  /* Dots indicadores */
+  .carousel-dots {
+    position: absolute;
+    bottom: 5rem; /* dejamos espacio para work-meta abajo */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    display: flex;
+    gap: 0.5rem;
+    padding: 0.5rem 0.9rem;
+    background: rgba(10, 10, 10, 0.5);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-radius: 999px;
+  }
+
+  .carousel-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+    transition: all 0.3s var(--ease);
+    border: none;
+    padding: 0;
+  }
+
+  .carousel-dot:hover { background: rgba(255, 255, 255, 0.6); }
+  .carousel-dot.active { background: var(--dot); width: 20px; border-radius: 4px; }
+
+  /* En mobile las flechas siempre visibles (no hay hover) */
+  @media (max-width: 900px) {
+    .work-card-carousel .carousel-arrow { opacity: 1; width: 38px; height: 38px; font-size: 1.5rem; }
+    .carousel-prev { left: 0.6rem; }
+    .carousel-next { right: 0.6rem; }
+  }
 
   /* Mobile: todos full-width */
   @media (max-width: 760px) {
@@ -1158,6 +1290,8 @@
 
   @media (max-width: 900px) {
     .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; padding: 2rem 0; }
+    .contact-grid .contact-info { order: 2; }
+    .contact-grid .contact-form { order: 1; }
   }
 
   .contact-info h4 {
@@ -1662,7 +1796,7 @@
         </div>
       </article>
 
-      <article class="service" style="grid-column: span 2;">
+      <article class="service service-wide">
         <div>
           <div class="service-top">
             <span class="service-num">SERVICE · 05</span>
@@ -1722,11 +1856,36 @@
         </div>
       </article>
 
-      <article class="work-card">
-        <div class="work-visual"></div>
+      <article class="work-card work-card-carousel">
+        <div class="carousel-track" id="carouselTrack">
+          <div class="carousel-slide carousel-placeholder" data-slide="1"><span class="carousel-num">01 / 09</span></div>
+          <div class="carousel-slide carousel-placeholder" data-slide="2"><span class="carousel-num">02 / 09</span></div>
+          <div class="carousel-slide carousel-placeholder" data-slide="3"><span class="carousel-num">03 / 09</span></div>
+          <div class="carousel-slide carousel-placeholder" data-slide="4"><span class="carousel-num">04 / 09</span></div>
+          <div class="carousel-slide carousel-placeholder" data-slide="5"><span class="carousel-num">05 / 09</span></div>
+          <div class="carousel-slide carousel-placeholder" data-slide="6"><span class="carousel-num">06 / 09</span></div>
+          <div class="carousel-slide carousel-placeholder" data-slide="7"><span class="carousel-num">07 / 09</span></div>
+          <div class="carousel-slide carousel-placeholder" data-slide="8"><span class="carousel-num">08 / 09</span></div>
+          <div class="carousel-slide carousel-placeholder" data-slide="9"><span class="carousel-num">09 / 09</span></div>
+        </div>
+
+        <button class="carousel-arrow carousel-prev" aria-label="Previous" type="button">‹</button>
+        <button class="carousel-arrow carousel-next" aria-label="Next" type="button">›</button>
+
+        <div class="carousel-dots" id="carouselDots">
+          <button class="carousel-dot active" data-index="0" aria-label="Slide 1" type="button"></button>
+          <button class="carousel-dot" data-index="1" aria-label="Slide 2" type="button"></button>
+          <button class="carousel-dot" data-index="2" aria-label="Slide 3" type="button"></button>
+          <button class="carousel-dot" data-index="3" aria-label="Slide 4" type="button"></button>
+          <button class="carousel-dot" data-index="4" aria-label="Slide 5" type="button"></button>
+          <button class="carousel-dot" data-index="5" aria-label="Slide 6" type="button"></button>
+          <button class="carousel-dot" data-index="6" aria-label="Slide 7" type="button"></button>
+          <button class="carousel-dot" data-index="7" aria-label="Slide 8" type="button"></button>
+          <button class="carousel-dot" data-index="8" aria-label="Slide 9" type="button"></button>
+        </div>
+
         <div class="work-topline">
           <span class="work-topline-left">PROJ 003</span>
-          <span class="work-arrow">↗</span>
         </div>
         <div class="work-meta">
           <span class="work-tag" data-i18n="work3.tag">Virtual Photo · 2026</span>
@@ -2407,6 +2566,63 @@ document.querySelectorAll('.faq-q').forEach(btn => {
     }
   });
 });
+
+/* ==========================================================
+   CARRUSEL · Virtual Photo (9 slides con swipe + flechas + dots)
+========================================================== */
+(function initCarousel() {
+  const track = document.getElementById('carouselTrack');
+  if (!track) return;
+
+  const slides = track.querySelectorAll('.carousel-slide');
+  const dots = document.querySelectorAll('.carousel-dot');
+  const prevBtn = document.querySelector('.carousel-prev');
+  const nextBtn = document.querySelector('.carousel-next');
+  const total = slides.length;
+  let currentIndex = 0;
+
+  function goTo(index) {
+    if (index < 0) index = 0;
+    if (index >= total) index = total - 1;
+    currentIndex = index;
+    track.style.transform = `translateX(-${index * 100}%)`;
+    dots.forEach((d, i) => d.classList.toggle('active', i === index));
+    if (prevBtn) prevBtn.disabled = (index === 0);
+    if (nextBtn) nextBtn.disabled = (index === total - 1);
+  }
+
+  // Flechas
+  if (prevBtn) prevBtn.addEventListener('click', () => goTo(currentIndex - 1));
+  if (nextBtn) nextBtn.addEventListener('click', () => goTo(currentIndex + 1));
+
+  // Dots
+  dots.forEach(dot => {
+    dot.addEventListener('click', () => goTo(parseInt(dot.dataset.index, 10)));
+  });
+
+  // Swipe (touch)
+  let touchStartX = 0;
+  let touchEndX = 0;
+  const threshold = 50; // px mínimos para contar como swipe
+
+  track.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].screenX; }, { passive: true });
+  track.addEventListener('touchend', e => {
+    touchEndX = e.changedTouches[0].screenX;
+    const delta = touchStartX - touchEndX;
+    if (Math.abs(delta) < threshold) return;
+    if (delta > 0) goTo(currentIndex + 1); // swipe izquierda → avanza
+    else goTo(currentIndex - 1); // swipe derecha → retrocede
+  }, { passive: true });
+
+  // Keyboard (para accesibilidad — funciona cuando el carrusel tiene foco)
+  track.parentElement.addEventListener('keydown', e => {
+    if (e.key === 'ArrowLeft') goTo(currentIndex - 1);
+    if (e.key === 'ArrowRight') goTo(currentIndex + 1);
+  });
+
+  // Estado inicial
+  goTo(0);
+})();
 
 /* ==========================================================
    Reveal on scroll
