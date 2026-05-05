@@ -733,11 +733,12 @@
   .work-card:hover .work-meta { transform: translateY(0); opacity: 1; }
   .work-card:hover .work-arrow { transform: translate(4px, -4px); }
 
-  /* Grid layout: 2 filas balanceadas — asimétrica + simétrica */
-  .work-card:nth-child(1) { grid-column: span 7; aspect-ratio: 16 / 9; }
-  .work-card:nth-child(2) { grid-column: span 5; aspect-ratio: 9 / 16; }
-  .work-card:nth-child(3) { grid-column: span 6; aspect-ratio: 4 / 3; }
-  .work-card:nth-child(4) { grid-column: span 6; aspect-ratio: 4 / 3; }
+  /* Grid layout: Card 1 (ancho) → Card 2 + Card 3 (verticales) → Card 4 (ancho)
+     Cada card respeta el aspect ratio EXACTO de su contenido */
+  .work-card:nth-child(1) { grid-column: span 12; aspect-ratio: 16 / 9; }   /* Ad Campaign - video 16:9 */
+  .work-card:nth-child(2) { grid-column: span 5;  aspect-ratio: 9 / 16; }   /* Brand Content - video 9:16 */
+  .work-card:nth-child(3) { grid-column: span 7;  aspect-ratio: 4 / 5; }    /* Carrusel - fotos verticales 4:5 */
+  .work-card:nth-child(4) { grid-column: span 12; aspect-ratio: 16 / 9; }   /* AI Models - video 16:9 */
 
   .work-visual {
     position: absolute;
@@ -1868,15 +1869,15 @@
 
       <article class="work-card work-card-carousel">
         <div class="carousel-track" id="carouselTrack">
-          <div class="carousel-slide" data-slide="1"><img src="foto-01.jpeg" alt="Virtual photo 01" loading="lazy"></div>
-          <div class="carousel-slide" data-slide="2"><img src="foto-02.jpeg" alt="Virtual photo 02" loading="lazy"></div>
+          <div class="carousel-slide" data-slide="1"><img src="foto-01.png" alt="Virtual photo 01" loading="lazy"></div>
+          <div class="carousel-slide" data-slide="2"><img src="foto-02.png" alt="Virtual photo 02" loading="lazy"></div>
           <div class="carousel-slide" data-slide="3"><img src="foto-03.jpeg" alt="Virtual photo 03" loading="lazy"></div>
           <div class="carousel-slide" data-slide="4"><img src="foto-04.jpeg" alt="Virtual photo 04" loading="lazy"></div>
           <div class="carousel-slide" data-slide="5"><img src="foto-05.jpeg" alt="Virtual photo 05" loading="lazy"></div>
-          <div class="carousel-slide" data-slide="6"><img src="foto-06.jpeg" alt="Virtual photo 06" loading="lazy"></div>
+          <div class="carousel-slide" data-slide="6"><img src="foto-06.png" alt="Virtual photo 06" loading="lazy"></div>
           <div class="carousel-slide" data-slide="7"><img src="foto-07.jpeg" alt="Virtual photo 07" loading="lazy"></div>
           <div class="carousel-slide" data-slide="8"><img src="foto-08.jpeg" alt="Virtual photo 08" loading="lazy"></div>
-          <div class="carousel-slide" data-slide="9"><img src="foto-09.jpeg" alt="Virtual photo 09" loading="lazy"></div>
+          <div class="carousel-slide" data-slide="9"><img src="foto-09.png" alt="Virtual photo 09" loading="lazy"></div>
         </div>
 
         <button class="carousel-arrow carousel-prev" aria-label="Previous" type="button">‹</button>
