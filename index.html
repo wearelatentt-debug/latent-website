@@ -32,7 +32,8 @@
 <meta property="og:locale" content="es_AR">
 <meta property="og:locale:alternate" content="en_US">
 <meta property="og:locale:alternate" content="pt_BR">
-<meta property="og:image" content="https://wearelatent.com/og-image.jpg">
+<meta property="og:image" content="https://wearelatent.com/og-image.png">
+<meta property="og:image:type" content="image/png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 
@@ -40,7 +41,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="LATENT · Your creative partner">
 <meta name="twitter:description" content="Agencia creativa AI-first. Calidad cinematográfica, eficiencia radical.">
-<meta name="twitter:image" content="https://wearelatent.com/og-image.jpg">
+<meta name="twitter:image" content="https://wearelatent.com/og-image.png">
 
 <!-- ========== FAVICON ========== -->
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230A0A0A'/%3E%3Ccircle cx='24' cy='22' r='5' fill='%23F5A623'/%3E%3C/svg%3E">
@@ -744,6 +745,52 @@
     overflow: hidden;
   }
 
+  /* Videos reales en las work cards */
+  .work-video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+    /* Pequeño ajuste de saturación/contraste para coherencia con la marca */
+    filter: brightness(0.92) contrast(1.05);
+    transition: filter 0.5s var(--ease);
+  }
+
+  .work-card:hover .work-video {
+    filter: brightness(1) contrast(1.05);
+  }
+
+  /* Imágenes del carrusel */
+  .carousel-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    user-select: none;
+    -webkit-user-drag: none;
+    pointer-events: none;
+  }
+
+  /* Overlay oscuro encima de videos e imágenes para asegurar legibilidad del texto */
+  .work-card:has(.work-video)::after,
+  .work-card-carousel::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0) 30%, rgba(0,0,0,0) 60%, rgba(0,0,0,0.7) 100%);
+    pointer-events: none;
+    z-index: 1;
+    transition: opacity 0.4s var(--ease);
+  }
+
+  /* El topline y el meta tienen que estar arriba del overlay */
+  .work-card .work-topline,
+  .work-card .work-meta {
+    z-index: 3;
+  }
+
   /* Placeholder gradients — distintos por card */
   .work-card:nth-child(1) .work-visual {
     background:
@@ -897,43 +944,6 @@
     position: relative;
     overflow: hidden;
     user-select: none;
-  }
-
-  /* Placeholders distintos por slide */
-  .carousel-placeholder {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .carousel-placeholder[data-slide="1"] { background: radial-gradient(circle at 40% 30%, rgba(245, 166, 35, 0.22), transparent 60%), linear-gradient(135deg, #1c1814 0%, #0a0806 100%); }
-  .carousel-placeholder[data-slide="2"] { background: radial-gradient(ellipse at 70% 40%, rgba(245, 166, 35, 0.2), transparent 55%), linear-gradient(180deg, #161310 0%, #060504 100%); }
-  .carousel-placeholder[data-slide="3"] { background: radial-gradient(circle at 20% 80%, rgba(245, 166, 35, 0.18), transparent 55%), linear-gradient(45deg, #1a1612 0%, #0a0806 100%); }
-  .carousel-placeholder[data-slide="4"] { background: radial-gradient(ellipse at 50% 50%, rgba(245, 166, 35, 0.22), transparent 60%), linear-gradient(160deg, #14110e 0%, #060504 100%); }
-  .carousel-placeholder[data-slide="5"] { background: radial-gradient(circle at 80% 20%, rgba(245, 166, 35, 0.18), transparent 55%), linear-gradient(210deg, #181510 0%, #050403 100%); }
-  .carousel-placeholder[data-slide="6"] { background: radial-gradient(ellipse at 30% 70%, rgba(245, 166, 35, 0.2), transparent 55%), linear-gradient(90deg, #1c1814 0%, #0d0a07 100%); }
-  .carousel-placeholder[data-slide="7"] { background: radial-gradient(circle at 60% 40%, rgba(245, 166, 35, 0.22), transparent 58%), linear-gradient(135deg, #181510 0%, #0a0806 100%); }
-  .carousel-placeholder[data-slide="8"] { background: radial-gradient(ellipse at 25% 25%, rgba(245, 166, 35, 0.2), transparent 55%), linear-gradient(200deg, #1c1814 0%, #060504 100%); }
-  .carousel-placeholder[data-slide="9"] { background: radial-gradient(circle at 75% 75%, rgba(245, 166, 35, 0.22), transparent 60%), linear-gradient(45deg, #161310 0%, #0a0806 100%); }
-
-  .carousel-placeholder::after {
-    content: '';
-    position: absolute; inset: 0;
-    background-image:
-      repeating-linear-gradient(90deg, transparent 0 19px, rgba(255,255,255,0.012) 19px 20px),
-      repeating-linear-gradient(0deg, transparent 0 19px, rgba(255,255,255,0.012) 19px 20px);
-    pointer-events: none;
-  }
-
-  .carousel-num {
-    position: relative;
-    z-index: 2;
-    font-family: var(--font-mono);
-    font-size: 1.5rem;
-    font-weight: 500;
-    color: rgba(255, 255, 255, 0.3);
-    letter-spacing: 0.2em;
-    pointer-events: none;
   }
 
   /* Flechas */
@@ -1833,7 +1843,7 @@
 
     <div class="works-grid reveal">
       <article class="work-card">
-        <div class="work-visual"></div>
+        <video class="work-video" src="work-01-ad-campaign.mp4" autoplay muted loop playsinline preload="metadata"></video>
         <div class="work-topline">
           <span class="work-topline-left">PROJ 001</span>
           <span class="work-arrow">↗</span>
@@ -1845,7 +1855,7 @@
       </article>
 
       <article class="work-card">
-        <div class="work-visual"></div>
+        <video class="work-video" src="work-02-brand-content.mp4" autoplay muted loop playsinline preload="metadata"></video>
         <div class="work-topline">
           <span class="work-topline-left">PROJ 002</span>
           <span class="work-arrow">↗</span>
@@ -1858,15 +1868,15 @@
 
       <article class="work-card work-card-carousel">
         <div class="carousel-track" id="carouselTrack">
-          <div class="carousel-slide carousel-placeholder" data-slide="1"><span class="carousel-num">01 / 09</span></div>
-          <div class="carousel-slide carousel-placeholder" data-slide="2"><span class="carousel-num">02 / 09</span></div>
-          <div class="carousel-slide carousel-placeholder" data-slide="3"><span class="carousel-num">03 / 09</span></div>
-          <div class="carousel-slide carousel-placeholder" data-slide="4"><span class="carousel-num">04 / 09</span></div>
-          <div class="carousel-slide carousel-placeholder" data-slide="5"><span class="carousel-num">05 / 09</span></div>
-          <div class="carousel-slide carousel-placeholder" data-slide="6"><span class="carousel-num">06 / 09</span></div>
-          <div class="carousel-slide carousel-placeholder" data-slide="7"><span class="carousel-num">07 / 09</span></div>
-          <div class="carousel-slide carousel-placeholder" data-slide="8"><span class="carousel-num">08 / 09</span></div>
-          <div class="carousel-slide carousel-placeholder" data-slide="9"><span class="carousel-num">09 / 09</span></div>
+          <div class="carousel-slide" data-slide="1"><img src="foto-1.jpeg" alt="Virtual photo 01" loading="lazy"></div>
+          <div class="carousel-slide" data-slide="2"><img src="foto-2.jpeg" alt="Virtual photo 02" loading="lazy"></div>
+          <div class="carousel-slide" data-slide="3"><img src="foto-3.jpeg" alt="Virtual photo 03" loading="lazy"></div>
+          <div class="carousel-slide" data-slide="4"><img src="foto-4.jpeg" alt="Virtual photo 04" loading="lazy"></div>
+          <div class="carousel-slide" data-slide="5"><img src="foto-5.jpeg" alt="Virtual photo 05" loading="lazy"></div>
+          <div class="carousel-slide" data-slide="6"><img src="foto-6.jpeg" alt="Virtual photo 06" loading="lazy"></div>
+          <div class="carousel-slide" data-slide="7"><img src="foto-7.jpeg" alt="Virtual photo 07" loading="lazy"></div>
+          <div class="carousel-slide" data-slide="8"><img src="foto-8.jpeg" alt="Virtual photo 08" loading="lazy"></div>
+          <div class="carousel-slide" data-slide="9"><img src="foto-9.jpeg" alt="Virtual photo 09" loading="lazy"></div>
         </div>
 
         <button class="carousel-arrow carousel-prev" aria-label="Previous" type="button">‹</button>
@@ -1894,7 +1904,7 @@
       </article>
 
       <article class="work-card">
-        <div class="work-visual"></div>
+        <video class="work-video" src="work-04-ai-models.mp4" autoplay muted loop playsinline preload="metadata"></video>
         <div class="work-topline">
           <span class="work-topline-left">PROJ 004</span>
           <span class="work-arrow">↗</span>
