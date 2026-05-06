@@ -763,11 +763,11 @@
     filter: brightness(1) contrast(1.05);
   }
 
-  /* Imágenes del carrusel */
+  /* Imágenes del carrusel — contain para mostrar las fotos completas, sin recortes */
   .carousel-slide img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
     display: block;
     user-select: none;
     -webkit-user-drag: none;
@@ -945,6 +945,10 @@
     position: relative;
     overflow: hidden;
     user-select: none;
+    background: var(--black-3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   /* Flechas */
@@ -1851,7 +1855,7 @@
         </div>
         <div class="work-meta">
           <span class="work-tag" data-i18n="work1.tag">Ad Campaign · 2026</span>
-          <h3 class="work-title" data-i18n="work1.title">Nombre del proyecto 01</h3>
+          <h3 class="work-title" data-i18n="work1.title">AI test campaign — Heineken x Mundial</h3>
         </div>
       </article>
 
@@ -1863,7 +1867,7 @@
         </div>
         <div class="work-meta">
           <span class="work-tag" data-i18n="work2.tag">Brand Content · 2026</span>
-          <h3 class="work-title" data-i18n="work2.title">Nombre del proyecto 02</h3>
+          <h3 class="work-title" data-i18n="work2.title">AI test campaign — Sony</h3>
         </div>
       </article>
 
@@ -1900,7 +1904,7 @@
         </div>
         <div class="work-meta">
           <span class="work-tag" data-i18n="work3.tag">Virtual Photo · 2026</span>
-          <h3 class="work-title" data-i18n="work3.title">Proyecto 03</h3>
+          <h3 class="work-title" data-i18n="work3.title">Concept brand photos</h3>
         </div>
       </article>
 
@@ -1912,7 +1916,7 @@
         </div>
         <div class="work-meta">
           <span class="work-tag" data-i18n="work4.tag">AI Models · 2026</span>
-          <h3 class="work-title" data-i18n="work4.title">Proyecto 04</h3>
+          <h3 class="work-title" data-i18n="work4.title">Concept brand models</h3>
         </div>
       </article>
     </div>
@@ -2239,10 +2243,10 @@ const translations = {
     "works.label": "Trabajos",
     "works.title.line1": "Piezas que", "works.title.line2": "hablan", "works.title.line3": "por nosotros",
     "works.sub": "Una selección curada de proyectos donde dirección creativa e inteligencia artificial convergen en resultados concretos.",
-    "work1.tag": "Ad Campaign · 2026", "work1.title": "Nombre del proyecto 01",
-    "work2.tag": "Brand Content · 2026", "work2.title": "Nombre del proyecto 02",
-    "work3.tag": "Virtual Photo · 2026", "work3.title": "Proyecto 03",
-    "work4.tag": "AI Models · 2026", "work4.title": "Proyecto 04",
+    "work1.tag": "Ad Campaign · 2026", "work1.title": "AI test campaign — Heineken x Mundial",
+    "work2.tag": "Brand Content · 2026", "work2.title": "AI test campaign — Sony",
+    "work3.tag": "Virtual Photo · 2026", "work3.title": "Concept brand photos",
+    "work4.tag": "AI Models · 2026", "work4.title": "Concept brand models",
     "works.cta.text": "<strong>¿Tenés un proyecto en mente?</strong> Cada pieza nueva empieza con una conversación.",
     "works.cta.button": "Empezar un proyecto",
 
@@ -2346,10 +2350,10 @@ const translations = {
     "works.label": "Work",
     "works.title.line1": "Pieces that", "works.title.line2": "speak", "works.title.line3": "for us",
     "works.sub": "A curated selection of projects where creative direction and AI converge into tangible results.",
-    "work1.tag": "Ad Campaign · 2026", "work1.title": "Project name 01",
-    "work2.tag": "Brand Content · 2026", "work2.title": "Project name 02",
-    "work3.tag": "Virtual Photo · 2026", "work3.title": "Project 03",
-    "work4.tag": "AI Models · 2026", "work4.title": "Project 04",
+    "work1.tag": "Ad Campaign · 2026", "work1.title": "AI test campaign — Heineken x Mundial",
+    "work2.tag": "Brand Content · 2026", "work2.title": "AI test campaign — Sony",
+    "work3.tag": "Virtual Photo · 2026", "work3.title": "Concept brand photos",
+    "work4.tag": "AI Models · 2026", "work4.title": "Concept brand models",
     "works.cta.text": "<strong>Got a project in mind?</strong> Every new piece starts with a conversation.",
     "works.cta.button": "Start a project",
 
@@ -2453,10 +2457,10 @@ const translations = {
     "works.label": "Trabalhos",
     "works.title.line1": "Peças que", "works.title.line2": "falam", "works.title.line3": "por nós",
     "works.sub": "Uma seleção curada de projetos onde direção criativa e inteligência artificial convergem em resultados concretos.",
-    "work1.tag": "Ad Campaign · 2026", "work1.title": "Nome do projeto 01",
-    "work2.tag": "Brand Content · 2026", "work2.title": "Nome do projeto 02",
-    "work3.tag": "Virtual Photo · 2026", "work3.title": "Projeto 03",
-    "work4.tag": "AI Models · 2026", "work4.title": "Projeto 04",
+    "work1.tag": "Ad Campaign · 2026", "work1.title": "AI test campaign — Heineken x Mundial",
+    "work2.tag": "Brand Content · 2026", "work2.title": "AI test campaign — Sony",
+    "work3.tag": "Virtual Photo · 2026", "work3.title": "Concept brand photos",
+    "work4.tag": "AI Models · 2026", "work4.title": "Concept brand models",
     "works.cta.text": "<strong>Tem um projeto em mente?</strong> Cada peça nova começa com uma conversa.",
     "works.cta.button": "Começar um projeto",
 
