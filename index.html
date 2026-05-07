@@ -713,6 +713,7 @@
     display: grid;
     grid-template-columns: repeat(12, 1fr);
     gap: 1.2rem;
+    align-items: center;
   }
 
   .work-card {
@@ -735,10 +736,11 @@
 
   /* Grid layout: Card 1 (ancho) → Card 2 + Card 3 (verticales) → Card 4 (ancho)
      Cada card respeta el aspect ratio EXACTO de su contenido */
-  .work-card:nth-child(1) { grid-column: span 12; aspect-ratio: 16 / 9; }   /* Ad Campaign - video 16:9 */
+  /* Grid layout: 2 filas asimétricas — cada card respeta el aspect ratio EXACTO de su contenido */
+  .work-card:nth-child(1) { grid-column: span 7;  aspect-ratio: 4 / 3; }    /* Ad Campaign - 4:3 */
   .work-card:nth-child(2) { grid-column: span 5;  aspect-ratio: 9 / 16; }   /* Brand Content - video 9:16 */
-  .work-card:nth-child(3) { grid-column: span 7;  aspect-ratio: 4 / 5; }    /* Carrusel - fotos verticales 4:5 */
-  .work-card:nth-child(4) { grid-column: span 12; aspect-ratio: 16 / 9; }   /* AI Models - video 16:9 */
+  .work-card:nth-child(3) { grid-column: span 5;  aspect-ratio: 4 / 5; }    /* Carrusel - fotos verticales 4:5 */
+  .work-card:nth-child(4) { grid-column: span 7;  aspect-ratio: 16 / 9; }   /* AI Models - video 16:9 (original) */
 
   .work-visual {
     position: absolute;
@@ -746,13 +748,14 @@
     overflow: hidden;
   }
 
-  /* Videos reales en las work cards */
+  /* Videos reales en las work cards — contain para que se vean siempre completos, sin recortes */
   .work-video {
     position: absolute;
     inset: 0;
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
+    background: var(--black-3);
     z-index: 0;
     /* Pequeño ajuste de saturación/contraste para coherencia con la marca */
     filter: brightness(0.92) contrast(1.05);
