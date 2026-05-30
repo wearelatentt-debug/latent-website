@@ -736,11 +736,11 @@
 
   /* Grid layout: Card 1 (ancho) → Card 2 + Card 3 (verticales) → Card 4 (ancho)
      Cada card respeta el aspect ratio EXACTO de su contenido */
-  /* Grid layout: 2 filas asimétricas — cada card respeta el aspect ratio EXACTO de su contenido */
-  .work-card:nth-child(1) { grid-column: span 7;  aspect-ratio: 4 / 3; }    /* Ad Campaign - 4:3 */
-  .work-card:nth-child(2) { grid-column: span 5;  aspect-ratio: 9 / 16; }   /* Brand Content - video 9:16 */
-  .work-card:nth-child(3) { grid-column: span 5;  aspect-ratio: 4 / 5; }    /* Carrusel - fotos verticales 4:5 */
-  .work-card:nth-child(4) { grid-column: span 7;  aspect-ratio: 16 / 9; }   /* AI Models - video 16:9 (original) */
+  /* Grid layout: 4 cards en una sola línea — cada card respeta su aspect ratio real, alineadas al centro vertical */
+  .work-card:nth-child(1) { grid-column: span 3; aspect-ratio: 4 / 3; }    /* Ad Campaign - 4:3 horizontal */
+  .work-card:nth-child(2) { grid-column: span 3; aspect-ratio: 9 / 16; }   /* Brand Content - 9:16 vertical */
+  .work-card:nth-child(3) { grid-column: span 3; aspect-ratio: 4 / 5; }    /* Carrusel Photos - 4:5 vertical */
+  .work-card:nth-child(4) { grid-column: span 3; aspect-ratio: 4 / 5; }    /* AI Models - 4:5 vertical */
 
   .work-visual {
     position: absolute;
@@ -1022,10 +1022,15 @@
     .carousel-next { right: 0.6rem; }
   }
 
-  /* Mobile: todos full-width */
+  /* Tablet: 2x2 grid, sigue respetando aspect ratios */
+  @media (max-width: 1100px) {
+    .work-card:nth-child(n) { grid-column: span 6; }
+  }
+
+  /* Mobile: cada card ocupa su fila, mantiene su aspect ratio real */
   @media (max-width: 760px) {
     .works-grid { gap: 0.8rem; }
-    .work-card:nth-child(n) { grid-column: span 12; aspect-ratio: 16 / 10; }
+    .work-card:nth-child(n) { grid-column: span 12; }
   }
 
   /* ===================================================================
@@ -1569,6 +1574,23 @@
     .reveal { opacity: 1; transform: none; }
   }
 </style>
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1010372847997913');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1010372847997913&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
 </head>
 <body>
 
